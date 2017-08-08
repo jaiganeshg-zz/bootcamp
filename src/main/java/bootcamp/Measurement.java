@@ -1,5 +1,7 @@
 package bootcamp;
 
+import static bootcamp.Unit.INCH;
+
 /**
  * Created by jaiganesh on 08/08/17.
  */
@@ -16,12 +18,9 @@ public class Measurement {
     public Measurement(int length, Unit unit) {
         this.length = length;
         this.unit = unit;
-    }
-
-    public Measurement(int length, Unit unit, InchConverter converter) {
-        this.length = length;
-        this.unit = unit;
-        this.converter = converter;
+        if (unit.equals(Unit.FOOT)) this.converter = new FootToInchesConverter();
+        else if (unit.equals(Unit.YARD)) this.converter = new YardToInchesConverter();
+        else this.converter = new InchToInchesConverter();
     }
 
     public Measurement convertToInches() {
@@ -47,7 +46,7 @@ public class Measurement {
     }
 
     public Measurement addMeasurement(Measurement adder) {
-        return new Measurement((this.unit != Unit.INCH ? this.convertToInches().length : this.length) + (adder.unit != Unit.INCH ? adder.convertToInches().length : adder.length), Unit.INCH);
+        return new Measurement(this.convertToInches().length + adder.convertToInches().length, INCH);
     }
 
 
@@ -61,19 +60,5 @@ public class Measurement {
                 "length=" + length +
                 ", unit=" + unit +
                 '}';
-    }
-
-    public static class MeasurementBuilder {
-        private Measurement measurement;
-
-        public MeasurementBuilder(int length, Unit unit) {
-            measurement = new Measurement(length, unit);
-            if (unit.equals(Unit.FOOT)) measurement.converter = new FootToInchesConverter();
-            if (unit.equals(Unit.YARD)) measurement.converter = new YardToInchesConverter();
-        }
-
-        public Measurement build() {
-            return measurement;
-        }
     }
 }
