@@ -11,10 +11,6 @@ public class Measurement {
     private Unit unit;
     private InchConverter converter;
 
-    public Measurement() {
-
-    }
-
     public Measurement(int length, Unit unit) {
         this.length = length;
         this.unit = unit;
@@ -47,11 +43,6 @@ public class Measurement {
 
     public Measurement addMeasurement(Measurement adder) {
         return new Measurement(this.convertToInches().length + adder.convertToInches().length, INCH);
-    }
-
-
-    public Measurement addYard(Measurement adder) {
-        return this;
     }
 
     @Override

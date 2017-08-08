@@ -2,9 +2,7 @@ package bootcamp;
 
 import org.junit.Test;
 
-import static bootcamp.Unit.FOOT;
-import static bootcamp.Unit.INCH;
-import static bootcamp.Unit.YARD;
+import static bootcamp.Unit.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,19 +38,24 @@ public class MeasurementTest {
     }
 
     @Test
-    public void addTwoMeasurementsOfSameUnit() {
+    public void addTwoMeasurementsOfSameUnitInch() {
         assertThat(new Measurement(4, INCH), is(new Measurement(1, INCH).addMeasurement(new Measurement(3, INCH))));
+    }
+
+    @Test
+    public void addTwoMeasurementsOfSameUnitFoot() {
         assertThat(new Measurement(24, INCH), is(new Measurement(1, FOOT).addMeasurement(new Measurement(1, FOOT))));
+    }
+
+    @Test
+    public void addTwoMeasurementsOfSameUnitYard() {
         assertThat(new Measurement(144, INCH), is(new Measurement(3, YARD).addMeasurement(new Measurement(1, YARD))));
     }
 
     @Test
     public void addYardToFoot() {
-        Measurement measurementYard = new Measurement(1, YARD);
-        Measurement measurementFoot = new Measurement(2, FOOT);
-        assertThat(new Measurement(60, INCH), is(measurementFoot.addMeasurement(measurementYard)));
+        assertThat(new Measurement(60, INCH), is(new Measurement(2, FOOT).addMeasurement(new Measurement(1, YARD))));
     }
-
 
     @Test
     public void addYardToInches() {
@@ -61,9 +64,6 @@ public class MeasurementTest {
 
     @Test
     public void addFootToInches() {
-        Measurement measurementFoot = new Measurement(1, FOOT);
-        Measurement measurementInch = new Measurement(1, INCH);
-
-        assertThat(new Measurement(13, INCH), is(measurementInch.addMeasurement(measurementFoot)));
+        assertThat(new Measurement(13, INCH), is(new Measurement(1, INCH).addMeasurement(new Measurement(1, FOOT))));
     }
 }
